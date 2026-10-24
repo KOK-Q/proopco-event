@@ -61,7 +61,7 @@ export function Support() {
                       key={phone.href}
                       href={phone.href}
                       dir="ltr"
-                      className="inline-flex items-center gap-1.5 self-end text-[13px] font-semibold text-[#d6bd91] transition-colors hover:text-gold"
+                      className="inline-flex items-center gap-1.5 self-end text-[10px] font-semibold text-[#d6bd91] transition-colors hover:text-gold"
                     >
                       <Phone className="size-4" />
                       {phone.label}
