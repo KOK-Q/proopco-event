@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowLeft, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, Check, X } from "lucide-react";
 
 /** FreeChallenge copy — edit these strings. */
 const freeChallenge = {
@@ -24,14 +24,42 @@ const freeChallenge = {
     error: "شماره‌ی موبایل باید 11 رقم باشد و با 09 شروع شود.",
     subtext:
       "پلن چالش پس از فعال‌سازی در داشبورد پراپکو برای همین شماره قرار می‌گیرد و اطلاع‌رسانی می‌شود.",
+    otp: {
+      title: "تأیید شماره موبایل",
+      description: "برای ثبت نهایی درخواست، کد تأیید را وارد کنید.",
+      sentTo: "کد ۵ رقمی به شماره‌ی {number} ارسال شد.",
+      editNumber: "ویرایش شماره",
+      resend: "ارسال مجدد کد",
+      resendTimer: "ارسال مجدد کد تا {time}",
+      submit: "تأیید و ثبت درخواست",
+      error: "کد تأیید را کامل وارد کنید.",
+      notReceived: "کد را دریافت نکردید؟",
+      support: "ارتباط با پشتیبانی",
+    },
+    done: {
+      title: "درخواستت ثبت شد",
+      subtext:
+        "پلن چالش رایگان پس از فعال‌سازی در داشبورد پراپکو برای همین شماره قرار می‌گیرد و از طریق پیامک به شما اطلاع‌رسانی می‌شود.",
+      cta: "متوجه شدم",
+    },
   },
 };
 
+const RESEND_SECONDS = 120; // 2-minute resend timer
+
 export function FreeChallenge() {
   const { card, modal } = freeChallenge;
+  const otp = modal.otp;
+  const done = modal.done;
+
   const [open, setOpen] = useState(false);
+  const [step, setStep] = useState<"phone" | "otp" | "done">("phone");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
+  const [code, setCode] = useState(["", "", "", "", ""]);
+  const [otpError, setOtpError] = useState("");
+  const [secondsLeft, setSecondsLeft] = useState(0);
+  const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
   // Close on Escape and lock body scroll while the modal is open.
   useEffect(() => {
@@ -47,15 +75,98 @@ export function FreeChallenge() {
     };
   }, [open]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Countdown for the resend timer while on the OTP step.
+  useEffect(() => {
+    if (!open || step !== "otp") return;
+    const id = setInterval(() => {
+      setSecondsLeft((s) => (s > 0 ? s - 1 : 0));
+    }, 1000);
+    return () => clearInterval(id);
+  }, [open, step]);
+
+  // Focus the first OTP box when entering the OTP step.
+  useEffect(() => {
+    if (step === "otp") inputsRef.current[0]?.focus();
+  }, [step]);
+
+  const openModal = () => {
+    setStep("phone");
+    setError("");
+    setOtpError("");
+    setCode(["", "", "", "", ""]);
+    setOpen(true);
+  };
+
+  const handlePhoneSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^09\d{9}$/.test(phone)) {
       setError(modal.error);
       return;
     }
     setError("");
-    // Interactive prototype — no real submission in this version.
+    setCode(["", "", "", "", ""]);
+    setOtpError("");
+    setSecondsLeft(RESEND_SECONDS);
+    setStep("otp");
+    // Interactive prototype — no real SMS is sent in this version.
   };
+
+  const handleVerify = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (code.join("").length < 5) {
+      setOtpError(otp.error);
+      return;
+    }
+    setOtpError("");
+    setStep("done");
+    // Interactive prototype — no real verification in this version.
+  };
+
+  const handleResend = () => {
+    if (secondsLeft > 0) return;
+    setCode(["", "", "", "", ""]);
+    setOtpError("");
+    setSecondsLeft(RESEND_SECONDS);
+    inputsRef.current[0]?.focus();
+  };
+
+  const handleOtpChange = (i: number, value: string) => {
+    const digit = value.replace(/\D/g, "").slice(-1);
+    setCode((prev) => {
+      const next = [...prev];
+      next[i] = digit;
+      return next;
+    });
+    if (otpError) setOtpError("");
+    if (digit && i < 4) inputsRef.current[i + 1]?.focus();
+  };
+
+  const handleOtpKeyDown = (
+    i: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === "Backspace" && !code[i] && i > 0) {
+      inputsRef.current[i - 1]?.focus();
+    }
+  };
+
+  const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const text = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 5);
+    if (!text) return;
+    e.preventDefault();
+    const next = ["", "", "", "", ""];
+    text.split("").forEach((c, idx) => {
+      next[idx] = c;
+    });
+    setCode(next);
+    if (otpError) setOtpError("");
+    inputsRef.current[Math.min(text.length, 4)]?.focus();
+  };
+
+  const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
+  const ss = String(secondsLeft % 60).padStart(2, "0");
+  const timeLabel = `${mm}:${ss}`;
+  const [sentBefore, sentAfter] = otp.sentTo.split("{number}");
 
   return (
     <section
@@ -89,10 +200,7 @@ export function FreeChallenge() {
           <div className="flex flex-col items-center justify-center">
             <button
               type="button"
-              onClick={() => {
-                setError("");
-                setOpen(true);
-              }}
+              onClick={openModal}
               className="group inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold-2 px-6 py-3.5 text-base font-bold text-[#100e09] transition-transform hover:-translate-y-0.5"
             >
               {card.cta.label}
@@ -121,17 +229,21 @@ export function FreeChallenge() {
           >
             {/* Head */}
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2
-                  id="challenge-modal-title"
-                  className="text-xl font-bold text-title"
-                >
-                  {modal.title}
-                </h2>
-                <p className="mt-2 text-[11px] leading-relaxed text-muted">
-                  {modal.description}
-                </p>
-              </div>
+              {step === "done" ? (
+                <div />
+              ) : (
+                <div>
+                  <h2
+                    id="challenge-modal-title"
+                    className="text-xl font-bold text-title"
+                  >
+                    {step === "phone" ? modal.title : otp.title}
+                  </h2>
+                  <p className="mt-2 text-[11px] leading-relaxed text-muted">
+                    {step === "phone" ? modal.description : otp.description}
+                  </p>
+                </div>
+              )}
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -142,55 +254,169 @@ export function FreeChallenge() {
               </button>
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} noValidate className="mt-6">
-              <label
-                htmlFor="challenge-phone"
-                className="mb-2 block text-[13px] font-semibold text-title"
-              >
-                {modal.inputLabel}
-              </label>
-              <input
-                id="challenge-phone"
-                type="tel"
-                inputMode="tel"
-                dir="ltr"
-                value={phone}
-                onChange={(e) => {
-                  setPhone(e.target.value);
-                  if (error) setError("");
-                }}
-                placeholder={modal.placeholder}
-                aria-invalid={!!error}
-                aria-describedby={error ? "challenge-phone-error" : undefined}
-                className={`h-13 w-full rounded-xl border bg-[#101010] px-4 text-right text-[#f8f7f4] outline-none transition-colors placeholder:text-[#666] focus:ring-3 focus:ring-[rgba(185,162,120,0.1)] ${
-                  error
-                    ? "border-[#d36b6b] focus:border-[#d36b6b]"
-                    : "border-white/15 focus:border-gold"
-                }`}
-              />
+            {step === "phone" && (
+              <>
+                {/* Phone form */}
+                <form onSubmit={handlePhoneSubmit} noValidate className="mt-6">
+                  <label
+                    htmlFor="challenge-phone"
+                    className="mb-2 block text-[13px] font-semibold text-title"
+                  >
+                    {modal.inputLabel}
+                  </label>
+                  <input
+                    id="challenge-phone"
+                    type="tel"
+                    inputMode="tel"
+                    dir="ltr"
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      if (error) setError("");
+                    }}
+                    placeholder={modal.placeholder}
+                    aria-invalid={!!error}
+                    aria-describedby={error ? "challenge-phone-error" : undefined}
+                    className={`h-13 w-full rounded-xl border bg-[#101010] px-4 text-right text-[#f8f7f4] outline-none transition-colors placeholder:text-[#666] focus:ring-3 focus:ring-[rgba(185,162,120,0.1)] ${
+                      error
+                        ? "border-[#d36b6b] focus:border-[#d36b6b]"
+                        : "border-white/15 focus:border-gold"
+                    }`}
+                  />
 
-              {error && (
-                <p
-                  id="challenge-phone-error"
-                  className="mt-2 text-[11px] leading-relaxed text-[#e18c8c]"
-                >
-                  {error}
+                  {error && (
+                    <p
+                      id="challenge-phone-error"
+                      className="mt-2 text-[11px] leading-relaxed text-[#e18c8c]"
+                    >
+                      {error}
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold-2 px-6 py-3.5 text-base font-bold text-[#100e09] transition-transform hover:-translate-y-0.5"
+                  >
+                    {modal.submit}
+                  </button>
+                </form>
+
+                {/* Subtext */}
+                <p className="mt-4 text-center text-[11px] leading-relaxed text-muted">
+                  {modal.subtext}
                 </p>
-              )}
+              </>
+            )}
 
-              <button
-                type="submit"
-                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold-2 px-6 py-3.5 text-base font-bold text-[#100e09] transition-transform hover:-translate-y-0.5"
-              >
-                {modal.submit}
-              </button>
-            </form>
+            {step === "otp" && (
+              <>
+                {/* OTP form */}
+                <p className="mt-6 text-[12px] leading-relaxed text-muted">
+                  {sentBefore}
+                  <span dir="ltr" className="mx-1 font-mono text-[#d6bd91]">
+                    {phone}
+                  </span>
+                  {sentAfter}
+                </p>
 
-            {/* Subtext */}
-            <p className="mt-4 text-center text-[11px] leading-relaxed text-muted">
-              {modal.subtext}
-            </p>
+                <form onSubmit={handleVerify} noValidate className="mt-4">
+                  <div dir="ltr" className="grid grid-cols-5 gap-2">
+                    {code.map((digit, i) => (
+                      <input
+                        key={i}
+                        ref={(el) => {
+                          inputsRef.current[i] = el;
+                        }}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={1}
+                        value={digit}
+                        onChange={(e) => handleOtpChange(i, e.target.value)}
+                        onKeyDown={(e) => handleOtpKeyDown(i, e)}
+                        onPaste={handleOtpPaste}
+                        aria-label={`رقم ${i + 1}`}
+                        aria-invalid={!!otpError}
+                        className={`h-14 w-full rounded-xl border bg-[#101010] text-center font-mono text-xl font-bold text-[#f8f7f4] caret-gold outline-none transition-colors focus:ring-3 focus:ring-[rgba(185,162,120,0.1)] ${
+                          otpError
+                            ? "border-[#d36b6b] focus:border-[#d36b6b]"
+                            : "border-white/15 focus:border-gold"
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {otpError && (
+                    <p className="mt-2 text-[11px] leading-relaxed text-[#e18c8c]">
+                      {otpError}
+                    </p>
+                  )}
+
+                  {/* Edit number / resend timer */}
+                  <div className="mt-4 flex items-center justify-between text-[12px]">
+                    <button
+                      type="button"
+                      onClick={() => setStep("phone")}
+                      className="text-gold-2 transition-colors hover:text-gold"
+                    >
+                      {otp.editNumber}
+                    </button>
+                    {secondsLeft > 0 ? (
+                      <span dir="ltr" className="text-muted">
+                        {otp.resendTimer.replace("{time}", timeLabel)}
+                      </span>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={handleResend}
+                        className="text-gold-2 transition-colors hover:text-gold"
+                      >
+                        {otp.resend}
+                      </button>
+                    )}
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold-2 px-6 py-3.5 text-base font-bold text-[#100e09] transition-transform hover:-translate-y-0.5"
+                  >
+                    {otp.submit}
+                  </button>
+                </form>
+
+                {/* Subtext — not received? → support */}
+                <p className="mt-4 text-center text-[11px] leading-relaxed text-muted">
+                  {otp.notReceived}{" "}
+                  <a
+                    href="#support"
+                    onClick={() => setOpen(false)}
+                    className="font-semibold text-gold-2 transition-colors hover:text-gold"
+                  >
+                    {otp.support}
+                  </a>
+                </p>
+              </>
+            )}
+
+            {step === "done" && (
+              <div className="pt-2 text-center">
+                <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-[rgba(57,185,132,0.12)] text-[#39b984]">
+                  <Check className="size-8" />
+                </div>
+                <h2 className="mt-5 text-xl font-bold text-title">
+                  {done.title}
+                </h2>
+                <p className="mt-2 text-[12px] leading-relaxed text-muted">
+                  {done.subtext}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold-2 px-6 py-3.5 text-base font-bold text-[#100e09] transition-transform hover:-translate-y-0.5"
+                >
+                  {done.cta}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
