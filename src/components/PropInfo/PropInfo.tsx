@@ -30,7 +30,7 @@ export function PropInfo() {
     <section
       id="prop-info"
       dir="rtl"
-      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-20 sm:py-28"
+      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-3 sm:py-28"
     >
       {/* Header */}
       <div className="max-w-2xl text-right">

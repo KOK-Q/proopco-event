@@ -15,8 +15,8 @@ const support = {
       icon: Phone,
       title: "تماس تلفنی",
       phones: [
-        { label: "۰۲۱ ۹۱۰۹ ۸۹۹۹", href: "tel:+982191098999" },
-        { label: "۰۵۱ ۳۶۰۵ ۶۰۶۰", href: "tel:+985136056060" },
+        { label: "021 9109 8999", href: "tel:+982191098999" },
+        { label: "051 3605 6060", href: "tel:+985136056060" },
       ],
     },
   ],
@@ -79,7 +79,7 @@ export function Support() {
       </div>
 
       {/* Subtext */}
-      <p className="mt-4 text-center text-[11px] text-muted">
+      <p className="mt-4 text-center text-[10px] text-muted">
         {support.subtext}
       </p>
     </section>

@@ -39,7 +39,7 @@ export function About() {
     <section
       id="about"
       dir="rtl"
-      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-20 sm:py-28"
+      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-10 sm:py-28"
     >
       {/* Header */}
       <div className="max-w-2xl text-right">
@@ -81,7 +81,7 @@ export function About() {
         {about.badges.map((badge) => (
           <span
             key={badge}
-            className="rounded-full border border-[rgba(185,162,120,0.3)] bg-[#b9a2780d] px-4 py-1.5 text-[12px] font-medium text-[#d1cabc]"
+            className="rounded-full border border-[rgba(185,162,120,0.3)] bg-[#b9a2780d] px-2.5 py-1.5 text-[12px] font-medium text-[#d1cabc]"
           >
             {badge}
           </span>

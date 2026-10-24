@@ -33,12 +33,12 @@ export function FreeChallenge() {
       </div>
 
       {/* Challenge card */}
-      <div className="mt-8 overflow-hidden rounded-3xl border border-[rgba(185,162,120,0.3)] bg-[radial-gradient(circle_at_10%_10%,rgba(185,162,120,0.13),transparent_52%)] p-5 transition-colors hover:border-gold/40">
+      <div className="mt-8 overflow-hidden rounded-3xl border border-[rgba(185,162,120,0.3)] bg-[radial-gradient(circle_at_10%_10%,rgba(185,162,120,0.13),transparent_82%)] p-5 transition-colors hover:border-gold/40">
         <div className="grid gap-8 md:grid-cols-2">
           {/* Right column: balance + specs */}
           <div className="text-right">
             <div className="flex items-center gap-3">
-              <h3 className="text-xl font-semibold text-title">{card.name}</h3>
+              <h3 className="text-2xl font-semibold text-title">{card.name}</h3>
             </div>
 
             <p className="mt-6 text-[13px] text-muted">{card.balanceDesc}</p>
