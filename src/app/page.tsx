@@ -4,6 +4,7 @@ import { PropInfo } from "@/components/PropInfo/PropInfo";
 import { FreeChallenge } from "@/components/FreeChallenge/FreeChallenge";
 import { About } from "@/components/About/About";
 import { Support } from "@/components/Support/Support";
+import { Footer } from "@/components/Footer/Footer";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <About />
         <Support />
       </main>
+      <Footer />
     </>
   );
 }
