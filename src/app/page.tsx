@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/HeroSection/HeroSection";
 import { PropInfo } from "@/components/PropInfo/PropInfo";
 import { FreeChallenge } from "@/components/FreeChallenge/FreeChallenge";
 import { About } from "@/components/About/About";
+import { Support } from "@/components/Support/Support";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <PropInfo />
         <FreeChallenge />
         <About />
+        <Support />
       </main>
     </>
   );
