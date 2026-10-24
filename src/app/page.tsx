@@ -1,4 +1,4 @@
-import { SiteNav } from "@/components/site-nav";
+import { Header } from "@/components/Header/Header";
 import { Hero } from "@/components/sections/hero";
 import { Marquee } from "@/components/sections/marquee";
 import { About } from "@/components/sections/about";
@@ -11,7 +11,7 @@ import { Footer } from "@/components/sections/footer";
 export default function Home() {
   return (
     <>
-      <SiteNav />
+      <Header />
       <main className="flex-1">
         <Hero />
         <Marquee />
