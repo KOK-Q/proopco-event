@@ -22,8 +22,8 @@ export function HeroSection() {
         {/* Floating logo boxes */}
         <HeroStage />
 
-        {/* Centered text under the boxes */}
-        <div className="mt-10 flex items-center justify-center gap-3 text-gold">
+        {/* Centered text — pulled up over the empty lower part of the stage */}
+        <div className="relative z-10 -mt-14 flex items-center justify-center gap-3 text-gold sm:-mt-20">
           <span className="h-px w-8 bg-linear-to-r from-transparent to-gold/60 sm:w-12" />
           <p className="text-base font-medium">{hero.eyebrow}</p>
           <span className="h-px w-8 bg-linear-to-l from-transparent to-gold/60 sm:w-12" />
