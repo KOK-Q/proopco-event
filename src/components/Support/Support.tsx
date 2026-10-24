@@ -51,7 +51,7 @@ export function Support() {
               <card.icon className="size-5" />
             </span>
             <div>
-              <h3 className="text-[15px] font-semibold text-[#f8f7f4]">
+              <h3 className="text-[13px] font-semibold text-[#f8f7f4]">
                 {card.title}
               </h3>
               {card.phones ? (
