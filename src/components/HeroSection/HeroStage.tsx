@@ -65,7 +65,7 @@ export function HeroStage() {
             <span className="tile-light">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/parsian-gold.svg"
+                src="/parsian-bourse.png"
                 width={1612}
                 height={2520}
                 alt="لوگوی پارسیان بورس"
