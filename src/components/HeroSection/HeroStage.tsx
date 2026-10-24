@@ -42,10 +42,11 @@ function Beams({ front = false }: { front?: boolean }) {
 
 export function HeroStage() {
   return (
-    <div className="hero-stage">
+    <>
       <Beams />
 
-      <div className="tile tile--proopco">
+      <div className="hero-stage">
+        <div className="tile tile--proopco">
         <div className="tile-body">
           <TileDepths />
           <div className="tile-face">
@@ -74,7 +75,9 @@ export function HeroStage() {
         </div>
       </div>
 
+      </div>
+
       <Beams front />
-    </div>
+    </>
   );
 }

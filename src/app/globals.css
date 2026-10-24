@@ -159,13 +159,6 @@
   }
 }
 
-@utility grid-texture {
-  background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -194,20 +187,20 @@
 }
 
 /* ===== Hero: two tiles lit from above =====
-   Several shafts of one colour (--light) at different strengths fall across
-   the stage and over both tiles; each tile's logo is cut through the face with
-   a soft glow of its own. */
-.hero-stage {
+   Several shafts of one colour (--light) at different strengths fall across the
+   WHOLE hero. The beams are direct children of `.hero` (not the stage), so the
+   light reaches all the way down over the text and buttons — matching the
+   prototype. Each tile's logo is cut through the face with a soft glow. */
+.hero {
   --light: 214, 189, 145; /* = gold2: the only light colour in the hero */
   --stage-h: clamp(318px, 90vw, 470px);
+  isolation: isolate; /* keep the beams' screen-blend contained to the hero */
+}
+.hero-stage {
   --gap: clamp(30px, 9vw, 76px);
   position: relative;
-  width: 100%; /* children are absolute, so the stage needs an explicit width */
-  max-width: 560px;
   height: var(--stage-h);
   pointer-events: none;
-  isolation: isolate;
-  overflow: hidden;
 }
 
 /* shafts of light: they enter already wide (no point source) and fade as they fall */

@@ -18,10 +18,10 @@ export function Header() {
           <Image
             src="/logo-type.svg"
             alt="Proop"
-            width={153}
+            width={133}
             height={36}
             priority
-            className="h-8 w-auto sm:h-9"
+            className="h-6 w-auto sm:h-9"
           />
         </a>
       </nav>
