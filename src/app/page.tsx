@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header/Header";
-import { Hero } from "@/components/sections/hero";
+import { HeroSection } from "@/components/HeroSection/HeroSection";
 import { Marquee } from "@/components/sections/marquee";
 import { About } from "@/components/sections/about";
 import { Agenda } from "@/components/sections/agenda";
@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <Header />
       <main className="flex-1">
-        <Hero />
+        <HeroSection />
         <Marquee />
         <About />
         <Agenda />

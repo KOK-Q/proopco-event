@@ -12,6 +12,10 @@
   --font-display: var(--font-bricolage);
   --font-heading: var(--font-bricolage);
   /* Brand palette — applied only to the parts specified */
+  --color-bg: var(--bg);
+  --color-gold: var(--gold);
+  --color-gold-2: var(--gold-2);
+  --color-title: var(--title);
   --color-navbar: var(--navbar);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -53,11 +57,15 @@
 
 :root {
   /* ── Brand palette ───────────────────────────────────────── */
+  --bg: #070707; /* page background (all pages) */
+  --gold: #d6bd90; /* brand gold */
+  --gold-2: #b9a278; /* secondary gold — free challenge button bg */
+  --title: #f8f7f4; /* title / heading text */
   --navbar: rgba(7, 7, 7, 0.82); /* navbar background */
 
   /* Cobalt & Coral — cool porcelain base, electric cobalt, warm coral pop */
   --background: #f1f3f8;
-  --foreground: #10131a;
+  --foreground: #ededed; /* light text for the dark page bg — refine per-part as needed */
   --card: #ffffff;
   --card-foreground: #10131a;
   --popover: #ffffff;
@@ -66,7 +74,7 @@
   --primary-foreground: #ffffff;
   --secondary: #e8ecf4;
   --secondary-foreground: #10131a;
-  --muted: #e2e7f1;
+  --muted: #9a9996; /* muted text */
   --muted-foreground: #5a6378;
   --accent: #ff5c38;
   --accent-foreground: #ffffff;
@@ -129,7 +137,14 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--bg);
+    background-image: radial-gradient(
+      ellipse at 50% -15%,
+      rgba(185, 162, 120, 0.14),
+      transparent 44%
+    );
+    background-repeat: no-repeat;
+    @apply text-foreground;
   }
   html {
     @apply font-sans;
@@ -161,11 +176,26 @@
   animation: marquee 32s linear infinite;
 }
 
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .animate-marquee {
+  .animate-marquee,
+  .animate-float {
     animation: none;
   }
 }
