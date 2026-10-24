@@ -9,7 +9,7 @@ import Image from "next/image";
 export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-navbar backdrop-blur-md">
-      <nav className="flex h-16 w-full items-center justify-between px-[22px]">
+      <nav className="flex h-16 w-full items-center justify-between px-5.5">
         <span dir="rtl" className="text-base font-medium text-white sm:text-lg">
          همایش چرا حرفه‌ای‌ها در بازارهای مالی ضرر می‌کنند؟
         </span>
