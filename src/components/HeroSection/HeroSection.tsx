@@ -10,7 +10,7 @@ const hero = {
   primaryCta: { label: "چالش رایگان", href: "#free-challenge" },
   secondaryCta: { label: "پراپ چیست؟", href: "#prop-info" },
   time: "چهارشنبه 6 آبان 1405",
-  location: "مشهدهتل‌بین‌المللی‌میثاق"
+  location: "مشهد هتل بین‌المللی میثاق"
 };
 
 export function HeroSection() {
@@ -30,7 +30,7 @@ export function HeroSection() {
         </div>
 
         {/* Title */}
-        <h1 className="mt-4 text-3xl font-bold leading-10 tracking-tight text-title sm:text-5xl w-60 height-2">
+        <h1 className="mt-4 text-3xl font-bold leading-10 lg:leading-20 tracking-tight text-title sm:text-5xl  w-60 lg:w-full height-2">
           {hero.title}
         </h1>
 
@@ -43,14 +43,14 @@ export function HeroSection() {
         <div dir="rtl" className="mt-8 flex w-full items-center gap-2">
           <a
             href={hero.primaryCta.href}
-            className="group inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-2xl bg-gold-2 px-6 py-3.5 text-base font-bold text-[#100e09] transition-transform hover:-translate-y-0.5"
+            className="font-button group inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-2xl bg-gold-2 px-6 py-3.5 text-base font-bold text-[#100e09] transition-transform hover:-translate-y-0.5"
           >
             {hero.primaryCta.label}
             <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" />
           </a>
           <a
             href={hero.secondaryCta.href}
-            className="inline-flex min-w-0 flex-1 items-center justify-center rounded-2xl border border-[rgba(185,162,120,0.5)] bg-transparent px-3 py-3.5 text-base font-bold text-[#D6BD90] transition-colors hover:bg-[rgba(185,162,120,0.1)]"
+            className="font-button inline-flex min-w-0 flex-1 items-center justify-center rounded-2xl border border-[rgba(185,162,120,0.5)] bg-transparent px-3 py-3.5 text-base font-bold text-[#D6BD90] transition-colors hover:bg-[rgba(185,162,120,0.1)]"
           >
             {hero.secondaryCta.label}
           </a>

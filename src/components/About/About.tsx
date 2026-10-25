@@ -39,7 +39,7 @@ export function About() {
     <section
       id="about"
       dir="rtl"
-      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-10 sm:py-28"
+      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-6 lg:py-2"
     >
       {/* Header */}
       <div className="max-w-2xl text-right">
@@ -68,7 +68,7 @@ export function About() {
               <h3 className="mt-0.5 text-[12px] font-semibold text-[#f8f7f4] sm:text-[13px]">
                 {card.title}
               </h3>
-              <p className="mt-2 text-[11px] leading-relaxed text-muted sm:text-[12px]">
+              <p className="mt-2 font-yekan text-[11px] leading-relaxed text-muted sm:text-[12px]">
                 {card.description}
               </p>
             </div>
@@ -81,7 +81,7 @@ export function About() {
         {about.badges.map((badge) => (
           <span
             key={badge}
-            className="rounded-full border border-[rgba(185,162,120,0.3)] bg-[#b9a2780d] px-2.5 py-1.5 text-[12px] font-medium text-[#d1cabc]"
+            className="font-vazir rounded-full border border-[rgba(185,162,120,0.3)] bg-[#b9a2780d] px-2.5 py-1.5 text-[12px] font-medium text-[#d1cabc]"
           >
             {badge}
           </span>
@@ -94,7 +94,7 @@ export function About() {
           href={about.cta.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex w-full text-[15px] items-center justify-center gap-2 rounded-2xl border border-[rgba(185,162,120,0.5)] bg-transparent px-6 py-3.5 text-base font-semibold text-[#D6BD90] transition-colors hover:bg-[rgba(185,162,120,0.1)]"
+          className="font-vazir group inline-flex w-full text-[15px] items-center justify-center gap-2 rounded-2xl border border-[rgba(185,162,120,0.5)] bg-transparent px-6 py-3.5 text-base font-semibold text-[#D6BD90] transition-colors hover:bg-[rgba(185,162,120,0.1)]"
         >
           {about.cta.label}
           <ExternalLink className="size-5 transition-transform group-hover:-translate-y-0.5" />

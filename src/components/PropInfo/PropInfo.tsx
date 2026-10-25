@@ -30,11 +30,11 @@ export function PropInfo() {
     <section
       id="prop-info"
       dir="rtl"
-      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-3 sm:py-28"
+      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-0 lg:py-8"
     >
       {/* Header */}
       <div className="max-w-2xl text-right">
-        <h2 className="text-2xl font-bold tracking-tight text-title sm:text-xl">
+        <h2 className="text-2xl font-extrabold tracking-tight text-title sm:text-xl">
           {propInfo.title}
         </h2>
         <p className="mt-4 text-base leading-relaxed text-muted text-[13px] sm:text-md">
@@ -47,15 +47,20 @@ export function PropInfo() {
         {propInfo.cards.map((card) => (
           <div
             key={card.number}
-            className="flex h-28 items-start gap-3 rounded-2xl border border-white/10 bg-[#0e0e0e] p-3 text-right transition-colors hover:border-gold/40"
+            className="flex h-28 flex-col justify-center rounded-2xl border border-white/10 bg-[#0e0e0e] p-3 text-right transition-colors hover:border-gold/40"
           >
-            <span className="flex size-6 flex-none items-center justify-center rounded-md bg-[rgba(185,162,120,0.1)] text-sm font-bold text-gold">
-              {card.number}
-            </span>
-            <div>
-              <h3 className="text-[13px] font-semibold text-title">{card.title}</h3>
-              <p className="mt-2 text-[12px] leading-relaxed text-muted">{card.description}</p>
+            {/* Number + title */}
+            <div className="flex items-center gap-2">
+              <span className="flex size-6 font-(family-name:--font-yekan-bakh) flex-none items-center justify-center rounded-md bg-[rgba(185,162,120,0.1)] text-sm font-bold text-gold">
+                {card.number}
+              </span>
+              <h3 className="font-yekan text-[13px] font-semibold text-title">
+                {card.title}
+              </h3>
             </div>
+            <p className="mt-2 font-yekan text-[12px] leading-relaxed text-muted">
+              {card.description}
+            </p>
           </div>
         ))}
       </div>

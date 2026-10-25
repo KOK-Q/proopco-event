@@ -9,7 +9,8 @@ const freeChallenge = {
   description:
     "به مناسبت حضورتان در همایش می‌توانید تجربه رایگان پراپ تریدینگ را داشته باشید.",
   card: {
-    name: "چالش با بالانس 10K",
+    name: "چالش با بالانس",
+    balance: "10K",
     balanceDesc: "این بالانس را از پراپکو دریافت کنید، به حد سود 10 درصد برسید، یک پراپ رایگان از طرف پراپکو دریافت می‌کنید.",
     cta: { label: " درخواست چالش رایگان", submitted: "درخواست ثبت شد" },
   },
@@ -181,7 +182,7 @@ export function FreeChallenge() {
     <section
       id="free-challenge"
       dir="rtl"
-      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-20 sm:py-28"
+      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-20 sm:py-20"
     >
       {/* Header */}
       <div className="max-w-2xl text-right">
@@ -200,7 +201,7 @@ export function FreeChallenge() {
             <Check className="size-5" />
           </div>
           <div>
-            <p className="text-[14px] font-bold text-[#39b984]">
+            <p className="font-vazir text-[14px] font-bold text-[#39b984]">
               {freeChallenge.submitted.title}
             </p>
             <p className="mt-1 text-[12px] leading-relaxed text-muted">
@@ -220,7 +221,12 @@ export function FreeChallenge() {
           {/* Right column: balance + specs */}
           <div className="text-right">
             <div className="flex items-center gap-3">
-              <h3 className="text-2xl font-semibold text-title">{card.name}</h3>
+              <h3 className="text-2xl font-bold font-vazir text-title">
+                {card.name}{" "}
+                <span className="font-(family-name:--font-yekan-bakh) text-2xl font-extrabold">
+                  {card.balance}
+                </span>
+              </h3>
             </div>
 
             <p className="mt-6 text-[13px] text-muted">{card.balanceDesc}</p>

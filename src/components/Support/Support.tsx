@@ -28,7 +28,7 @@ export function Support() {
     <section
       id="support"
       dir="rtl"
-      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-20 sm:py-28"
+      className="mx-auto w-full max-w-6xl scroll-mt-20 px-5.5 py-14 lg:py-18"
     >
       {/* Header */}
       <div className="max-w-2xl text-right">
@@ -69,7 +69,7 @@ export function Support() {
                   ))}
                 </div>
               ) : (
-                <p className="text-[11px] leading-relaxed text-muted">
+                <p className="font-vazir text-[11px] leading-relaxed text-muted">
                   {card.description}
                 </p>
               )}

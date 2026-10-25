@@ -59,7 +59,7 @@ const footer = {
 
 export function Footer() {
   return (
-    <footer dir="rtl" className="border-t border-white/10 bg-[#070707]">
+    <footer dir="rtl" className="font-vazir border-t border-white/10 bg-[#070707]">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-4 px-5.5 py-12 text-center sm:py-16">
         {/* Row 1 — logo */}
         <a href="#top" aria-label="Home" className="inline-block">

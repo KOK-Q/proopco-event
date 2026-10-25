@@ -7,10 +7,17 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-bricolage);
-  --font-heading: var(--font-bricolage);
+  /* Google fonts are named directly: their next/font variables append an
+     Arial "Fallback" face that would catch Persian glyphs before Peyda. */
+  --font-sans:
+    "Poppins", var(--font-peyda), var(--font-yekan-bakh), "Vazirmatn", Tahoma,
+    sans-serif;
+  --font-vazir: var(--font-poppins-digits), "Vazirmatn", Tahoma, sans-serif;
+  --font-yekan:
+    var(--font-poppins-digits), var(--font-yekan-bakh), Tahoma, sans-serif;
+  --font-button:
+    var(--font-poppins-digits), var(--font-yekan-bakh), Tahoma, sans-serif;
+  --font-mono: var(--font-poppins-digits), var(--font-geist-mono);
   /* Brand palette — applied only to the parts specified */
   --color-bg: var(--bg);
   --color-gold: var(--gold);
@@ -152,6 +159,17 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-vazir;
+  }
+  button {
+    @apply font-button;
   }
   ::selection {
     background: var(--accent);
