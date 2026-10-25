@@ -62,10 +62,10 @@ const vazirmatn = Vazirmatn({
 });
 
 export const metadata: Metadata = {
-  title: `${event.name} — ${event.tagline}`,
+  title: `${event.name}`,
   description: event.description,
   openGraph: {
-    title: `${event.name} — ${event.tagline}`,
+    title: `${event.name}`,
     description: event.description,
     type: "website",
   },

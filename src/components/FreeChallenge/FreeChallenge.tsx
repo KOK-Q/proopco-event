@@ -12,7 +12,11 @@ const freeChallenge = {
     name: "چالش با بالانس",
     balance: "10K",
     balanceDesc: "این بالانس را از پراپکو دریافت کنید، به حد سود 10 درصد برسید، یک پراپ رایگان از طرف پراپکو دریافت می‌کنید.",
-    cta: { label: " درخواست چالش رایگان", submitted: "درخواست ثبت شد" },
+    cta: {
+      label: " درخواست چالش رایگان",
+      // Shown after the request is submitted.
+      dashboard: { label: "ورود به داشبورد", href: "https://proop.co/user" },
+    },
   },
   subtext: "برای ثبت درخواست فقط شماره موبایل مورد نیاز است.",
   submitted: {
@@ -229,20 +233,21 @@ export function FreeChallenge() {
               </h3>
             </div>
 
-            <p className="mt-6 text-[13px] text-muted">{card.balanceDesc}</p>
+            <p className="mt-6 font-vazir text-[13px] text-muted">{card.balanceDesc}</p>
           </div>
 
           {/* Left column: CTA + subtext */}
           <div className="flex flex-col items-center justify-center">
             {submitted ? (
-              <button
-                type="button"
-                disabled
-                className="inline-flex w-full cursor-default items-center justify-center gap-2 rounded-2xl border border-[rgba(57,185,132,0.35)] bg-[rgba(57,185,132,0.08)] px-6 py-3.5 text-base font-bold text-[#39b984]"
+              <a
+                href={card.cta.dashboard.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-button group inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[rgba(185,162,120,0.5)] bg-linear-to-l from-[rgba(185,162,120,0.2)] to-[rgba(185,162,120,0.03)] px-6 py-3.5 text-base font-bold text-[#D6BD90] transition-colors hover:from-[rgba(185,162,120,0.3)] hover:to-[rgba(185,162,120,0.08)]"
               >
-                {card.cta.submitted}
-                <Check className="size-4" />
-              </button>
+                {card.cta.dashboard.label}
+                <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" />
+              </a>
             ) : (
               <button
                 type="button"
@@ -264,16 +269,19 @@ export function FreeChallenge() {
       {open && (
         <div
           dir="rtl"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/72 p-3 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/72 backdrop-blur-sm animate-in fade-in duration-200 motion-reduce:animate-none sm:items-center sm:p-3"
           onClick={() => setOpen(false)}
           role="dialog"
           aria-modal="true"
           aria-labelledby="challenge-modal-title"
         >
+          {/* Bottom sheet on mobile, centered dialog from sm up */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md rounded-3xl border border-white/13 bg-[#171716] p-5 text-right shadow-[0_-14px_50px_rgba(0,0,0,0.45)] sm:p-6"
+            className="max-h-[90dvh] w-full overflow-y-auto rounded-t-3xl border border-b-0 border-white/13 bg-[#171716] p-5 pb-[calc(2.5rem+env(safe-area-inset-bottom))] text-right shadow-[0_-14px_50px_rgba(0,0,0,0.45)] animate-in slide-in-from-bottom duration-300 ease-out motion-reduce:animate-none sm:max-w-md sm:rounded-3xl sm:border-b sm:p-6 sm:fade-in sm:zoom-in-95 sm:slide-in-from-bottom-0 sm:duration-200"
           >
+            {/* Sheet handle (mobile only) */}
+            <div className="mx-auto -mt-2 mb-4 h-1 w-10 rounded-full bg-white/20 sm:hidden" />
             {/* Head */}
             <div className="flex items-start justify-between gap-4">
               {step === "done" ? (
@@ -452,7 +460,7 @@ export function FreeChallenge() {
                 <h2 className="mt-5 text-xl font-bold text-title">
                   {done.title}
                 </h2>
-                <p className="mt-2 text-[12px] leading-relaxed text-muted">
+                <p className="mt-2 font-vazir text-[12px] leading-relaxed text-muted">
                   {done.subtext}
                 </p>
                 <button

@@ -4,8 +4,7 @@
  */
 
 export const event = {
-  name: "همایش پراپکو 1405",
-  tagline: "The build conference for people shipping what's next",
+  name: "همایش پراپکو",
   description:
     "One day, one room, and the people turning hard problems into shipped products. Join builders, founders, and product teams at Proop Summit 2026.",
 
