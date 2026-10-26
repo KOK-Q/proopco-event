@@ -58,7 +58,8 @@ export function PropInfo() {
                 {card.title}
               </h3>
             </div>
-            <p className="mt-2 font-yekan text-[12px] leading-relaxed text-muted">
+            {/* Indent past number badge (size-6 + gap-2) so it sits under the title */}
+            <p className="mt-2 ps-8 font-yekan text-[12px] leading-relaxed text-muted">
               {card.description}
             </p>
           </div>
