@@ -208,7 +208,7 @@ export function FreeChallenge() {
             <p className="font-vazir text-[14px] font-bold text-[#39b984]">
               {freeChallenge.submitted.title}
             </p>
-            <p className="mt-1 text-[12px] leading-relaxed text-muted">
+            <p className="mt-1 font-vazir text-[12px] leading-relaxed text-muted">
               {submittedBefore}
               <span dir="ltr" className="mx-1 font-mono text-title">
                 {phone}
@@ -278,7 +278,7 @@ export function FreeChallenge() {
           {/* Bottom sheet on mobile, centered dialog from sm up */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="max-h-[90dvh] w-full overflow-y-auto rounded-t-3xl border border-b-0 border-white/13 bg-[#171716] p-5 pb-[calc(2.5rem+env(safe-area-inset-bottom))] text-right shadow-[0_-14px_50px_rgba(0,0,0,0.45)] animate-in slide-in-from-bottom duration-300 ease-out motion-reduce:animate-none sm:max-w-md sm:rounded-3xl sm:border-b sm:p-6 sm:fade-in sm:zoom-in-95 sm:slide-in-from-bottom-0 sm:duration-200"
+            className="font-vazir [&_button]:font-vazir max-h-[90dvh] w-full overflow-y-auto rounded-t-3xl border border-b-0 border-white/13 bg-[#171716] p-5 pb-[calc(2.5rem+env(safe-area-inset-bottom))] text-right shadow-[0_-14px_50px_rgba(0,0,0,0.45)] animate-in slide-in-from-bottom duration-300 ease-out motion-reduce:animate-none sm:max-w-md sm:rounded-3xl sm:border-b sm:p-6 sm:fade-in sm:zoom-in-95 sm:slide-in-from-bottom-0 sm:duration-200"
           >
             {/* Sheet handle (mobile only) */}
             <div className="mx-auto -mt-2 mb-4 h-1 w-10 rounded-full bg-white/20 sm:hidden" />
